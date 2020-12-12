@@ -49,7 +49,7 @@ def getHistory(userId):
                     for rowGenre in artistGenreCursor:
                         genre = rowGenre['genre']
                         genres.append(genre)
-                        artist['genres'] = genres
+                    artist['genres'] = genres
                     artists.append(artist)
             else:
                 artists = None
@@ -101,5 +101,3 @@ def getGenres(artistId):
     finally:
         connection.close()
     return genres
-
-print(getHistory("000ebc858861aca26bac9b49f650ed424cf882fc"))

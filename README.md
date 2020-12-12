@@ -2,7 +2,8 @@
 Folder db:
 - Chứa file backup .sql cho db của app mình (tạm thời dùng cách này trong thời gian Nam đẩy lên host)
 - File repo.py: Viết các query cần thiết vào đây
-- File dbconfig: Config kết nối với db (mọi người tự điền đường dẫn trong máy mình, add vào .gitignore)
+- File ConnectDatabase đã điền đầy đủ thông tin host, có thể kết nối và chạy luôn, không cần chỉnh sửa sang local.
+    Nhưng tốc độ có lẽ hơi chậm một chút, muốn nhanh thì dùng local sẽ nhanh hơn.
 
 Folder apis: (import db.repo)
 - recommenders: Chứa các thuật toán gợi ý (WMF, cold-start...)
