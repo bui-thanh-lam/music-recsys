@@ -1,4 +1,4 @@
-# music-recsys
+# Backend của project Nhập môn AI 20201 - HUST
 Folder db:
 - Chứa file backup .sql cho db
 - File repository.py: Viết các query cần thiết vào đây
