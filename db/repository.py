@@ -17,11 +17,11 @@ def login(username, password):
 #Query history
 def getHistory(userId):
     connection = DB.getConnection()
-    historSql = "SELECT echonest_track_id, play_count FROM history WHERE user_id = %s"
+    historySql = "SELECT echonest_track_id, play_count FROM history WHERE user_id = %s"
     try:
         history = []
         historyCursor = connection.cursor()
-        historyCursor.execute(historSql, (userId))
+        historyCursor.execute(historySql, (userId))
         for rowHistory in historyCursor:
             echonestTrackId = rowHistory['echonest_track_id']
             trackSql = "SELECT * FROM track WHERE echonest_track_id = %s"
