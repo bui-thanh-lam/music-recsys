@@ -102,3 +102,4 @@ def getGenres(artistId):
         connection.close()
     return genres
 
+print(getHistory("000ebc858861aca26bac9b49f650ed424cf882fc"))
