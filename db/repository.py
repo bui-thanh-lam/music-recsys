@@ -24,11 +24,12 @@ def getHistory(userId):
         historyCursor.execute(historSql, (userId))
         for rowHistory in historyCursor:
             echonestTrackId = rowHistory['echonest_track_id']
-
             trackSql = "SELECT * FROM track WHERE echonest_track_id = %s"
             trackCursor = connection.cursor()
             trackCursor.execute(trackSql,(echonestTrackId))
             track = trackCursor.fetchone()
+            addDateTime = track['add_date']
+            track['add_date'] = addDateTime.strftime('%m/%d/%Y')
             artists = []
             if(track['spotify_track_id'] != None):
                 trackArtistSql = "SELECT * FROM track_artist WHERE echonest_track_id = %s"
