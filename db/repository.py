@@ -1,8 +1,8 @@
-import ConnectDatabase as DB
+import db.ConnectDatabase as DB
+import numpy as np
 
 
 #Query user
-
 def login(username, password):
     connection = DB.getConnection()
     sql = "SELECT * FROM user WHERE user_name = %s AND pass_word = %s"
@@ -15,7 +15,6 @@ def login(username, password):
         connection.close()
 
 #Query history
-
 def getHistory(userId):
     connection = DB.getConnection()
     historSql = "SELECT echonest_track_id, play_count FROM history WHERE user_id = %s"
@@ -101,3 +100,56 @@ def getGenres(artistId):
     finally:
         connection.close()
     return genres
+
+# Get mapping of users and their indexes. Return Dictionary of User
+def get_dict_user():
+    connection = DB.getConnection()
+    sql = "SELECT user_id FROM history GROUP BY user_id"
+    try:
+        dict_user = {}
+        id = 0
+        users = connection.cursor()
+        users.execute(sql)
+        for user in users:
+            dict_user[id] = user['user_id']
+            dict_user[user['user_id']] = id
+            id += 1
+    finally:
+        connection.close()
+
+    return dict_user
+
+# Get mapping of items and their indexes. Return Dictionary of Items
+def get_dict_item():
+    connection = DB.getConnection()
+    sql = "SELECT echonest_track_id FROM history GROUP BY echonest_track_id"
+    try:
+        dict_item = {}
+        id = 0
+        items = connection.cursor()
+        items.execute(sql)
+        for item in items:
+            dict_item[id] = item['echonest_track_id']
+            dict_item[item['echonest_track_id']] = id
+            id += 1
+    finally:
+        connection.close()
+
+    return dict_item
+
+# Get R_real matrix. Save R in Data file
+def get_R_real(dict_user, dict_item):
+    connection = DB.getConnection()
+    sql = "SELECT * FROM history"
+    try:
+        n_users = int(len(dict_user) / 2)
+        n_items = int(len(dict_item) / 2)
+        R = np.zeros((n_users, n_items), dtype=float)
+        history = connection.cursor()
+        history.execute(sql)
+        for row_history in history:
+            R[dict_user[row_history['user_id']], dict_item[row_history['echonest_track_id']]] = row_history['play_count']
+    finally:
+        connection.close()
+
+    np.savetxt('../data/R_real.txt', R, delimiter=' ', fmt='%d')
