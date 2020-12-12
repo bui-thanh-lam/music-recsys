@@ -55,7 +55,7 @@ def getHistory(userId):
                 artists = None
 
             track['artists'] = artists
-            track['play count'] = rowHistory['play_count']
+            track['play_count'] = rowHistory['play_count']
             history.append(track)
         return history
     finally:
