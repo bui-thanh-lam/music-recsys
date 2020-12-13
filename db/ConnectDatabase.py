@@ -1,5 +1,6 @@
 import pymysql.cursors
-#config thong tin ket noi database trong file nay
+
+
 def getConnection():
     connection = pymysql.connect(host='34.123.234.51',
                                  user='teamlang',

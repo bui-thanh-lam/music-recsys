@@ -75,21 +75,21 @@ class WeightedMF:
         return recommendations
 
     def save(self):
-        np.savetxt('.../data/U.txt', self.U, delimiter=' ', fmt='%.5f')
-        np.savetxt('.../data/I.txt', self.I, delimiter=' ', fmt='%.5f')
-        np.savetxt('.../data/predict.txt', self.predict, delimiter=' ', fmt='%.5f')
+        np.savetxt('../data/U.txt', self.U, delimiter=' ', fmt='%.5f')
+        np.savetxt('../data/I.txt', self.I, delimiter=' ', fmt='%.5f')
+        np.savetxt('../data/predict.txt', self.predict, delimiter=' ', fmt='%.5f')
 
     def load(self):
-        if os.path.isfile('.../data/U.txt') and os.path.isfile('.../data/I.txt'):
-            with open('.../data/U.txt', 'r') as f:
+        if os.path.isfile('../data/U.txt') and os.path.isfile('../data/I.txt'):
+            with open('../data/U.txt', 'r') as f:
                 self.U = [[float(num) for num in line[:-1].split(' ')] for line in f]
                 self.U = np.array(self.U)
-            with open('.../data/I.txt', 'r') as f:
+            with open('../data/I.txt', 'r') as f:
                 self.I = [[float(num) for num in line[:-1].split(' ')] for line in f]
                 self.I = np.array(self.I)
             self.is_loaded = True
-        if os.path.isfile('.../data/predict.txt'):
-            with open('.../data/predict.txt', 'r') as f:
+        if os.path.isfile('../data/predict.txt'):
+            with open('../data/predict.txt', 'r') as f:
                 self.I = [[float(num) for num in line[:-1].split(' ')] for line in f]
                 self.I = np.array(self.I)
 

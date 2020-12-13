@@ -1,54 +1,57 @@
-import db.ConnectDatabase as DB
+import db.ConnectDatabase as Connector
 import numpy as np
-import apis.process as Process
+
+connection = Connector.getConnection()
+cursor = connection.cursor()
 
 
-#Query user
 def login(username, password):
-    connection = DB.getConnection()
+    """Return a user object if login successfully. Otherwise return None"""
     sql = "SELECT * FROM user WHERE user_name = %s AND pass_word = %s"
     try:
-        cursor = connection.cursor()
-        cursor.execute(sql, (username,password))
+        cursor.execute(sql, (username, password))
         user = cursor.fetchone()
         return user
+    except:
+        print("Failed to login")
+        return None
     finally:
+        cursor.close()
         connection.close()
 
-#Query history
-def getHistory(userId):
-    connection = DB.getConnection()
-    historySql = "SELECT echonest_track_id, play_count FROM history WHERE user_id = %s"
+
+def get_history(userId):
+    """Return user's history if they have listened to at least one song. Otherwise, return None"""
+    if is_new_user(userId):
+        return None
+    sql = "SELECT echonest_track_id, play_count FROM history WHERE user_id = %s"
     try:
         history = []
-        historyCursor = connection.cursor()
-        historyCursor.execute(historySql, (userId))
-        for rowHistory in historyCursor:
-            echonestTrackId = rowHistory['echonest_track_id']
-            trackSql = "SELECT * FROM track WHERE echonest_track_id = %s"
-            trackCursor = connection.cursor()
-            trackCursor.execute(trackSql,(echonestTrackId))
-            track = trackCursor.fetchone()
-            addDateTime = track['add_date']
-            track['add_date'] = addDateTime.strftime('%m/%d/%Y')
+        cursor.execute(sql, userId)
+        histories = cursor.fetchall()
+        for h in histories:
+            echonestTrackId = histories['echonest_track_id']
+            sql = "SELECT * FROM track WHERE echonest_track_id = %s"
+            cursor.execute(sql, echonestTrackId)
+            track = cursor.fetchone()
+            add_date_time = track['add_date']
+            track['add_date'] = add_date_time.strftime('%m/%d/%Y')
             artists = []
-            if(track['spotify_track_id'] != None):
-                trackArtistSql = "SELECT * FROM track_artist WHERE echonest_track_id = %s"
-                trackArtistCursor = connection.cursor()
-                trackArtistCursor.execute(trackArtistSql,(echonestTrackId))
-                for rowTrackArtist in trackArtistCursor:
-                    artistId = rowTrackArtist['artist_id']
+            if track['spotify_track_id']:
+                sql = "SELECT * FROM track_artist WHERE echonest_track_id = %s"
+                cursor.execute(sql, echonestTrackId)
+                tracks_arists = cursor.fetchall()
+                for tracks_arists in tracks_arists:
+                    artistId = tracks_arists['artist_id']
                     artistSql = "SELECT * FROM artist WHERE artist_id = %s"
-                    artistCursor = connection.cursor()
-                    artistCursor.execute(artistSql, (artistId))
-                    artist = artistCursor.fetchone()
-
+                    cursor.execute(artistSql, artistId)
+                    artist = cursor.fetchone()
                     genres = []
-                    artistGenresSql = "SELECT * FROM artist_genre WHERE artist_id = %s"
-                    artistGenreCursor = connection.cursor()
-                    artistGenreCursor.execute(artistGenresSql, (artistId))
-                    for rowGenre in artistGenreCursor:
-                        genre = rowGenre['genre']
+                    sql = "SELECT * FROM artist_genre WHERE artist_id = %s"
+                    cursor.execute(sql, artistId)
+                    _genres = cursor.fetchall()
+                    for genre in _genres:
+                        genre = genre['genre']
                         genres.append(genre)
                     artist['genres'] = genres
                     artists.append(artist)
@@ -56,56 +59,64 @@ def getHistory(userId):
                 artists = None
 
             track['artists'] = artists
-            track['play_count'] = rowHistory['play_count']
+            track['play_count'] = h['play_count']
             history.append(track)
         return history
+    except:
+        print("Failed to get user history")
+        return None
     finally:
+        cursor.close()
         connection.close()
 
-def increaseView(userId, echonestTrackId):
-    connection = DB.getConnection()
+
+def increase_view(userId, echonestTrackId):
+    """Update view and users' history in database. Return None"""
     try:
-        historySql = "SELECT * FROM history WHERE user_id = %s AND echonest_track_id = %s"
-        historyCursor = connection.cursor()
-        historyCursor.execute(historySql, (userId, echonestTrackId))
-        history = historyCursor.fetchone()
+        sql = "SELECT * FROM history WHERE user_id = %s AND echonest_track_id = %s"
+        cursor.execute(sql, (userId, echonestTrackId))
+        history = cursor.fetchone()
         playCount = history['play_count']
         playCount += 1
 
-        trackSql = "SELECT * FROM track WHERE echonest_track_id = %s"
-        trackCursor = connection.cursor()
-        trackCursor.execute(trackSql, (echonestTrackId))
-        track = trackCursor.fetchone()
+        sql = "SELECT * FROM track WHERE echonest_track_id = %s"
+        cursor.execute(sql, echonestTrackId)
+        track = cursor.fetchone()
         view = track['view']
         view += 1
 
-        updateHistorySql = "UPDATE history SET play_count = %s WHERE user_id = %s AND echonest_track_id = %s"
-        updateHistoryCursor = connection.cursor()
-        updateHistoryCursor.execute(updateHistorySql, (playCount, userId, echonestTrackId))
-        updateTrackSql = "UPDATE track SET view = %s WHERE echonest_track_id = %s"
-        updateTrackCursor = connection.cursor()
-        updateTrackCursor.execute(updateTrackSql, (view, echonestTrackId))
+        sql = "UPDATE history SET play_count = %s WHERE user_id = %s AND echonest_track_id = %s"
+        cursor.execute(sql, (playCount, userId, echonestTrackId))
+        sql = "UPDATE track SET view = %s WHERE echonest_track_id = %s"
+        cursor.execute(sql, (view, echonestTrackId))
         connection.commit()
+    except:
+        print("Failed to update view and history")
     finally:
+        cursor.close()
         connection.close()
     return None
 
-def getGenres(artistId):
+
+def get_genres(artistId):
+    """Return aritst's genres given their id. Return None if artist_id is invalid"""
     genres = []
-    connection = DB.getConnection()
     try:
         sql = "SELECT genre FROM artist_genre WHERE artist_id = %s"
-        cursor = connection.cursor()
-        cursor.execute(sql, (artistId))
+        cursor.execute(sql, artistId)
         for row in cursor:
             genres.append(row)
+        return genres
+    except:
+        print("Failed to get artist's genres")
+        return None
     finally:
+        cursor.close()
         connection.close()
-    return genres
 
-# Get mapping of users and their indexes. Return Dictionary of User
+
 def get_dict_user():
-    connection = DB.getConnection()
+    """Get mapping of users and their indexes. Return a dictionary of User"""
     sql = "SELECT user_id FROM history GROUP BY user_id"
     try:
         dict_user = {}
@@ -116,83 +127,92 @@ def get_dict_user():
             dict_user[id] = user['user_id']
             dict_user[user['user_id']] = id
             id += 1
+        return dict_user
+    except:
+        print("Failed to create users dictionary")
+        return None
     finally:
+        cursor.close()
         connection.close()
 
-    return dict_user
 
-# Get mapping of items and their indexes. Return Dictionary of Items
 def get_dict_item():
-    connection = DB.getConnection()
+    """Get mapping of items and their indexes. Return a dictionary of Items"""
     sql = "SELECT echonest_track_id FROM history GROUP BY echonest_track_id"
     try:
         dict_item = {}
         id = 0
-        items = connection.cursor()
-        items.execute(sql)
+        cursor.execute(sql)
+        items = cursor.fetchall()
         for item in items:
             dict_item[id] = item['echonest_track_id']
             dict_item[item['echonest_track_id']] = id
             id += 1
+        return dict_item
+    except:
+        print("Failed to create items dictionary")
+        return None
     finally:
+        cursor.close()
         connection.close()
 
-    return dict_item
 
-# Get R_real matrix. Save R in Data file
-def get_R_real(dict_user, dict_item):
-    connection = DB.getConnection()
+def get_R(dict_user, dict_item):
+    """Get R_real matrix from users' history. Save R in Data file. Return None"""
     sql = "SELECT * FROM history"
     try:
         n_users = int(len(dict_user) / 2)
         n_items = int(len(dict_item) / 2)
         R = np.zeros((n_users, n_items), dtype=float)
-        history = connection.cursor()
-        history.execute(sql)
-        for row_history in history:
-            R[dict_user[row_history['user_id']], dict_item[row_history['echonest_track_id']]] = row_history['play_count']
+        cursor.execute(sql)
+        histories = cursor.fetchall()
+        for history in histories:
+            R[dict_user[history['user_id']], dict_item[history['echonest_track_id']]] = history[
+                'play_count']
+    except:
+        print("Failed to get R")
     finally:
+        cursor.close()
         connection.close()
+    np.savetxt('../data/R.txt', R, delimiter=' ', fmt='%d')
+    return None
 
-    np.savetxt('../data/R_real.txt', R, delimiter=' ', fmt='%d')
 
-# Get playlist recommended for user_id. If it is new user, return []
-def get_playlist_1(user_id, n_songs):
-    connection = DB.getConnection()
-    user_sql = "SELECT echonest_track_id FROM history WHERE user_id = %s"
-    user_cursor = connection.cursor()
-    user_cursor.execute(user_sql, (user_id))
-    if not user_cursor:  # user was not in history
-        return []
-
-    list = Process.get_list_rec(user_id, 10)  # list of echonest_track_id recommended for user_id
+def is_new_user(user_id):
+    """Check if an user is new or not given their id"""
     try:
-        play_list1 = []
-        for song in list:
-            trackSql = "SELECT spotify_track_id, track_name FROM track WHERE echonest_track_id = %s"
-            trackCursor = connection.cursor()
-            trackCursor.execute(trackSql, (song))
-            track = trackCursor.fetchone()
-            artists = []
-            if track['spotify_track_id'] != None:
-                trackArtistSql = "SELECT * FROM track_artist WHERE echonest_track_id = %s"
-                trackArtistCursor = connection.cursor()
-                trackArtistCursor.execute(trackArtistSql, (song))
-                for rowTrackArtist in trackArtistCursor:
-                    artistId = rowTrackArtist['artist_id']
-                    artistSql = "SELECT artist_name FROM artist WHERE artist_id = %s"
-                    artistCursor = connection.cursor()
-                    artistCursor.execute(artistSql, (artistId))
-                    artist = artistCursor.fetchone()
-                    artists.append(artist)
-            else:
-                artists = None
-
-            track['artists'] = artists
-            play_list1.append(track)
-        return play_list1
+        sql = "SELECT user_id FROM history WHERE user_id = %s"
+        cursor.execute(sql, user_id)
+        return True
+    except:
+        print("Failed to get user")
+        return False
     finally:
+        cursor.close()
         connection.close()
 
 
-
+def get_track_by_id(echonest_track_id):
+    """Get a track given its id. Return None if the id is invalid"""
+    try:
+        sql = "SELECT * FROM track WHERE echonest_track_id = %s"
+        cursor.execute(sql, echonest_track_id)
+        track = cursor.fetchone()
+        artists = []
+        if track['spotify_track_id']:
+            sql = "SELECT artist_id FROM track_artist WHERE echonest_track_id = %s"
+            cursor.execute(sql, track)
+            artist_ids = cursor.fetchall()
+            for artist_id in artist_ids:
+                artistSql = "SELECT artist_name FROM artist WHERE artist_id = %s"
+                cursor.execute(artistSql, artist_id)
+                artist = cursor.fetchone()
+                artists.append(artist)
+        track['artists'] = artists
+        return track
+    except:
+        print("Failed to get track")
+        return None
+    finally:
+        cursor.close()
+        connection.close()

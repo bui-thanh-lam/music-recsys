@@ -1,2 +1,4 @@
 /venv/
 db/ConnectDatabase.py
+*__pycache__
+
