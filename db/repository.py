@@ -15,9 +15,6 @@ def login(username, password):
     except:
         print("Failed to login")
         return None
-    finally:
-        cursor.close()
-        connection.close()
 
 
 def get_history(userId):
@@ -65,9 +62,6 @@ def get_history(userId):
     except:
         print("Failed to get user history")
         return None
-    finally:
-        cursor.close()
-        connection.close()
 
 
 def increase_view(userId, echonestTrackId):
@@ -92,9 +86,6 @@ def increase_view(userId, echonestTrackId):
         connection.commit()
     except:
         print("Failed to update view and history")
-    finally:
-        cursor.close()
-        connection.close()
     return None
 
 
@@ -110,9 +101,6 @@ def get_genres(artistId):
     except:
         print("Failed to get artist's genres")
         return None
-    finally:
-        cursor.close()
-        connection.close()
 
 
 def get_dict_user():
@@ -131,9 +119,6 @@ def get_dict_user():
     except:
         print("Failed to create users dictionary")
         return None
-    finally:
-        cursor.close()
-        connection.close()
 
 
 def get_dict_item():
@@ -152,9 +137,6 @@ def get_dict_item():
     except:
         print("Failed to create items dictionary")
         return None
-    finally:
-        cursor.close()
-        connection.close()
 
 
 def get_R(dict_user, dict_item):
@@ -171,10 +153,7 @@ def get_R(dict_user, dict_item):
                 'play_count']
     except:
         print("Failed to get R")
-    finally:
-        cursor.close()
-        connection.close()
-    np.savetxt('../data/R.txt', R, delimiter=' ', fmt='%d')
+    np.savetxt('../../data/R.txt', R, delimiter=' ', fmt='%d')
     return None
 
 
@@ -187,9 +166,6 @@ def is_new_user(user_id):
     except:
         print("Failed to get user")
         return False
-    finally:
-        cursor.close()
-        connection.close()
 
 
 def get_track_by_id(echonest_track_id):
@@ -213,6 +189,3 @@ def get_track_by_id(echonest_track_id):
     except:
         print("Failed to get track")
         return None
-    finally:
-        cursor.close()
-        connection.close()
