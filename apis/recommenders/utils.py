@@ -24,8 +24,8 @@ def convert(R, alpha=40):
     return P, C
 
 
-def get_trackIndex_Recommendation(dict_item, recommendations):
-    name_of_songs_rec = []
+def get_trackId_recommendation(dict_item, recommendations):
+    trackId_rec = []
     for i in recommendations:
-        name_of_songs_rec.append(dict_item[i])
-    return name_of_songs_rec
+        trackId_rec.append(dict_item[i])
+    return trackId_rec

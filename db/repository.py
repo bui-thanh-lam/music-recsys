@@ -1,5 +1,6 @@
 import db.ConnectDatabase as DB
 import numpy as np
+import apis.process as Process
 
 
 #Query user
@@ -154,3 +155,44 @@ def get_R_real(dict_user, dict_item):
         connection.close()
 
     np.savetxt('../data/R_real.txt', R, delimiter=' ', fmt='%d')
+
+# Get playlist recommended for user_id. If it is new user, return []
+def get_playlist_1(user_id, n_songs):
+    connection = DB.getConnection()
+    user_sql = "SELECT echonest_track_id FROM history WHERE user_id = %s"
+    user_cursor = connection.cursor()
+    user_cursor.execute(user_sql, (user_id))
+    if not user_cursor:  # user was not in history
+        return []
+
+    list = Process.get_list_rec(user_id, 10)  # list of echonest_track_id recommended for user_id
+    try:
+        play_list1 = []
+        for song in list:
+            trackSql = "SELECT spotify_track_id, track_name FROM track WHERE echonest_track_id = %s"
+            trackCursor = connection.cursor()
+            trackCursor.execute(trackSql, (song))
+            track = trackCursor.fetchone()
+            artists = []
+            if track['spotify_track_id'] != None:
+                trackArtistSql = "SELECT * FROM track_artist WHERE echonest_track_id = %s"
+                trackArtistCursor = connection.cursor()
+                trackArtistCursor.execute(trackArtistSql, (song))
+                for rowTrackArtist in trackArtistCursor:
+                    artistId = rowTrackArtist['artist_id']
+                    artistSql = "SELECT artist_name FROM artist WHERE artist_id = %s"
+                    artistCursor = connection.cursor()
+                    artistCursor.execute(artistSql, (artistId))
+                    artist = artistCursor.fetchone()
+                    artists.append(artist)
+            else:
+                artists = None
+
+            track['artists'] = artists
+            play_list1.append(track)
+        return play_list1
+    finally:
+        connection.close()
+
+
+
