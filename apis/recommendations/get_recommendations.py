@@ -1,6 +1,7 @@
 from db import repository as repo
 from apis.recommendations.WMF import WeightedMF
 from apis.recommendations import utils
+from pprint import pprint
 
 dict_user = repo.get_dict_user()
 dict_item = repo.get_dict_item()
@@ -28,4 +29,8 @@ def get_CF_playlist(user_id, n_tracks):
         track = repo.get_track_by_id(track_id)
         playlist.append(track)
     return playlist
+
+
+# # Test playlist 1
+# pprint(get_CF_playlist("9de117d7f9ae2a385514f9fc4f1f84da3d91a976", 20))
 

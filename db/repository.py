@@ -162,26 +162,26 @@ def is_new_user(user_id):
     try:
         sql = "SELECT user_id FROM history WHERE user_id = %s"
         cursor.execute(sql, user_id)
-        return True
+        return False
     except:
         print("Failed to get user")
-        return False
+        return True
 
 
 def get_track_by_id(echonest_track_id):
     """Get a track given its id. Return None if the id is invalid"""
     try:
-        sql = "SELECT * FROM track WHERE echonest_track_id = %s"
+        sql = "SELECT echonest_track_id, spotify_track_id, track_name FROM track WHERE echonest_track_id = %s"
         cursor.execute(sql, echonest_track_id)
         track = cursor.fetchone()
         artists = []
         if track['spotify_track_id']:
             sql = "SELECT artist_id FROM track_artist WHERE echonest_track_id = %s"
-            cursor.execute(sql, track)
+            cursor.execute(sql, echonest_track_id)
             artist_ids = cursor.fetchall()
             for artist_id in artist_ids:
-                artistSql = "SELECT artist_name FROM artist WHERE artist_id = %s"
-                cursor.execute(artistSql, artist_id)
+                sql = "SELECT artist_name FROM artist WHERE artist_id = %s"
+                cursor.execute(sql, artist_id['artist_id'])
                 artist = cursor.fetchone()
                 artists.append(artist)
         track['artists'] = artists

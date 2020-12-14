@@ -20,16 +20,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7b5a3c47-2ff6-45f4-a5e7-85a1d1a4d830" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/apis/track/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/apis/user/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apis/recommendations/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apis/recommenders/WMF.py" beforeDir="false" afterPath="$PROJECT_DIR$/apis/recommendations/WMF.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apis/recommenders/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apis/recommendations/train_WMF.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apis/recommenders/get_recommendations.py" beforeDir="false" afterPath="$PROJECT_DIR$/apis/recommendations/get_recommendations.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/apis/recommenders/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/apis/recommendations/utils.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data/R_train.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/db/ConnectDatabase.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/ConnectDatabase.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apis/recommendations/get_recommendations.py" beforeDir="false" afterPath="$PROJECT_DIR$/apis/recommendations/get_recommendations.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/repository.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/repository.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -135,41 +127,41 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1899" height="348" key="GridCell.Tab.0.bottom" timestamp="1607892482874">
+    <state width="1899" height="348" key="GridCell.Tab.0.bottom" timestamp="1607971826700">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="348" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1607892482874" />
-    <state width="1899" height="348" key="GridCell.Tab.0.center" timestamp="1607892482874">
+    <state width="1899" height="348" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1607971826700" />
+    <state width="1899" height="348" key="GridCell.Tab.0.center" timestamp="1607971826700">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="348" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1607892482874" />
-    <state width="1899" height="348" key="GridCell.Tab.0.left" timestamp="1607892482874">
+    <state width="1899" height="348" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1607971826700" />
+    <state width="1899" height="348" key="GridCell.Tab.0.left" timestamp="1607971826700">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="348" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1607892482874" />
-    <state width="1899" height="348" key="GridCell.Tab.0.right" timestamp="1607892482874">
+    <state width="1899" height="348" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1607971826700" />
+    <state width="1899" height="348" key="GridCell.Tab.0.right" timestamp="1607971826700">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="348" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1607892482874" />
-    <state width="1899" height="348" key="GridCell.Tab.1.bottom" timestamp="1607892482874">
+    <state width="1899" height="348" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1607971826700" />
+    <state width="1899" height="348" key="GridCell.Tab.1.bottom" timestamp="1607971826700">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="348" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1607892482874" />
-    <state width="1899" height="348" key="GridCell.Tab.1.center" timestamp="1607892482874">
+    <state width="1899" height="348" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1607971826700" />
+    <state width="1899" height="348" key="GridCell.Tab.1.center" timestamp="1607971826700">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="348" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1607892482874" />
-    <state width="1899" height="348" key="GridCell.Tab.1.left" timestamp="1607892482874">
+    <state width="1899" height="348" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1607971826700" />
+    <state width="1899" height="348" key="GridCell.Tab.1.left" timestamp="1607971826700">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="348" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1607892482874" />
-    <state width="1899" height="348" key="GridCell.Tab.1.right" timestamp="1607892482874">
+    <state width="1899" height="348" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1607971826700" />
+    <state width="1899" height="348" key="GridCell.Tab.1.right" timestamp="1607971826700">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="348" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1607892482874" />
-    <state x="461" y="165" key="SettingsEditor" timestamp="1607878598773">
+    <state width="1899" height="348" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1607971826700" />
+    <state x="461" y="165" key="SettingsEditor" timestamp="1607970051413">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="461" y="165" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1607878598773" />
+    <state x="461" y="165" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1607970051413" />
   </component>
 </project>
