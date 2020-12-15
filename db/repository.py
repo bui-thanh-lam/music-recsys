@@ -203,6 +203,7 @@ def get_track_by_id(echonest_track_id):
         return None
 
 
-def get_all_tracks():
-    cursor.execute("SELECT echonest_track_id FROM track")
+def get_random_tracks(n_track=1000):
+    cursor.execute("SELECT echonest_track_id FROM track ORDER BY RAND() LIMIT %s", n_track)
     return cursor.fetchall()
+

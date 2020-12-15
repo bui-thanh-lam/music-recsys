@@ -27,24 +27,29 @@ def get_CF_playlist(user_id, n_tracks):
         track = repo.get_track_by_id(track_id)
         if track['spotify_track_id']:
             playlist.append(track)
-        if len(playlist) > n_tracks:
+        if len(playlist) >= n_tracks:
             return playlist
 
 
 def get_nextup_tracks(user_id, seed_track_id, n_tracks):
-    """Return top n most similar tracks to a seed track given the user's id"""
-    candidates = repo.get_history(user_id)
+    """Return top n most similar tracks from user's history and random selection to a seed track given the user's id"""
+    candidates = repo.get_random_tracks()
+    candidates += repo.get_history(user_id)
     scores = []
     for track in candidates:
         scores.append(similarity.track_similarity(seed_track_id, track['echonest_track_id']))
     scores = np.argsort(scores)
     next_up_tracks = []
-    for i in range(n_tracks):
-        next_up_tracks.append(candidates[scores[-(i+1)]])
+    i = 1
+    while len(next_up_tracks) < n_tracks:
+        candidate = repo.get_track_by_id(candidates[scores[-i]]['echonest_track_id'])
+        if candidate['spotify_track_id']:
+            next_up_tracks.append(candidate)
+        i += 1
     return next_up_tracks
 
 
 # # Test
-pprint(get_CF_playlist("45a768612381c7dd8d50484f45f5f1ca2ed5d021", 10))
-# pprint(get_nextup_tracks("000ebc858861aca26bac9b49f650ed424cf882fc", "SONMINI12AB0180DCE", 5))
+# pprint(get_CF_playlist("45a768612381c7dd8d50484f45f5f1ca2ed5d021", 10))
+pprint(get_nextup_tracks("000ebc858861aca26bac9b49f650ed424cf882fc", "SONMINI12AB0180DCE", 5))
 # pprint(repo.get_history("000ebc858861aca26bac9b49f650ed424cf882fc"))
