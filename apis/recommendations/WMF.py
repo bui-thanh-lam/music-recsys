@@ -22,16 +22,16 @@ class WeightedMF:
         - save(), load(): save and load U, I if they have been calculated already
 
     """
-    def __init__(self, P, C, n_epochs=10, depth=5, lr=1e-6, rgl=0.01):
-        self.P = P
-        self.C = C
-        self.n_users = P.shape[0]
-        self.n_items = P.shape[1]
+    def __init__(self, P=None, C=None, n_epochs=10, depth=5, lr=1e-6, rgl=0.01):
+        if P and C:
+            self.P = P
+            self.C = C
+            self.n_users = P.shape[0]
+            self.n_items = P.shape[1]
+            self.U = np.random.normal(0, 0.5, size=(self.n_users, self.depth))
+            self.I = np.random.normal(0, 0.5, size=(self.depth, self.n_items))
+            self.predict = np.zeros_like(P)
         self.depth = depth
-        self.U = np.random.normal(0, 0.5, size=(self.n_users, self.depth))
-        self.I = np.random.normal(0, 0.5, size=(self.depth, self.n_items))
-        self.predict = np.zeros_like(P)
-        self.is_loaded = False
         self.rgl = rgl
         self.lr = lr
         self.n_epochs = n_epochs
@@ -58,10 +58,10 @@ class WeightedMF:
         self.predict = np.dot(self.U, self.I)
         return self.predict
 
-    def get_recommendations(self, user_index, n_rec_items):
+    def get_recommendations(self, user_index):
         recommendations = np.argsort(self.predict[user_index])
-        recommendations = recommendations[-n_rec_items:]
-        return recommendations
+        recommendations = np.flip(recommendations)
+        return np.flip(recommendations)
 
     def save(self):
         np.savetxt('../../data/U.txt', self.U, delimiter=' ', fmt='%.5f')
@@ -70,16 +70,18 @@ class WeightedMF:
         return None
 
     def load(self):
-        if os.path.isfile('../../data/U.txt') and os.path.isfile('../data/I.txt'):
-            with open('../../data/U.txt', 'r') as f:
+        root_path = os.path.abspath('../')
+        if os.path.isfile(root_path+'/data/U.txt') and os.path.isfile(root_path+'/data/I.txt'):
+            with open(root_path+'/data/U.txt', 'r') as f:
                 self.U = [[float(num) for num in line[:-1].split(' ')] for line in f]
                 self.U = np.array(self.U)
-            with open('../../data/I.txt', 'r') as f:
+                self.n_users = self.U.shape[0]
+            with open(root_path+'/data/I.txt', 'r') as f:
                 self.I = [[float(num) for num in line[:-1].split(' ')] for line in f]
                 self.I = np.array(self.I)
-            self.is_loaded = True
-        if os.path.isfile('../../data/predict.txt'):
-            with open('../../data/predict.txt', 'r') as f:
-                self.I = [[float(num) for num in line[:-1].split(' ')] for line in f]
-                self.I = np.array(self.I)
+                self.n_items = self.I.shape[1]
+        if os.path.isfile(root_path+'/data/predict.txt'):
+            with open(root_path+'/data/predict.txt', 'r') as f:
+                self.predict = [[float(num) for num in line[:-1].split(' ')] for line in f]
+                self.predict = np.array(self.predict)
         return None

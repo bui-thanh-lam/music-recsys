@@ -20,9 +20,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7b5a3c47-2ff6-45f4-a5e7-85a1d1a4d830" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/apis/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apis/recommendations/WMF.py" beforeDir="false" afterPath="$PROJECT_DIR$/apis/recommendations/WMF.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/apis/recommendations/get_recommendations.py" beforeDir="false" afterPath="$PROJECT_DIR$/apis/recommendations/get_recommendations.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apis/recommendations/train_WMF.py" beforeDir="false" afterPath="$PROJECT_DIR$/apis/recommendations/train_WMF.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apis/track/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/apis/recommendations/similarity.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/apis/user/__init__.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/db/DB.sql" beforeDir="false" afterPath="$PROJECT_DIR$/db/DB.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db/repository.py" beforeDir="false" afterPath="$PROJECT_DIR$/db/repository.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +60,7 @@
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
-  <component name="RunManager" selected="Python.get_recommendations">
+  <component name="RunManager" selected="Python.main">
     <configuration name="ConnectDatabase" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="music-recsys" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -96,9 +103,53 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="music-recsys" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/apis" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/apis/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="similarity" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="music-recsys" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/apis/recommendations" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/apis/recommendations/similarity.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.main" />
         <item itemvalue="Python.get_recommendations" />
+        <item itemvalue="Python.similarity" />
         <item itemvalue="Python.ConnectDatabase" />
       </list>
     </recent_temporary>
@@ -127,41 +178,52 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1899" height="348" key="GridCell.Tab.0.bottom" timestamp="1607971826700">
+    <state width="1899" height="348" key="GridCell.Tab.0.bottom" timestamp="1608047153925">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="348" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1607971826700" />
-    <state width="1899" height="348" key="GridCell.Tab.0.center" timestamp="1607971826700">
+    <state width="1899" height="348" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1608047153925" />
+    <state width="1899" height="348" key="GridCell.Tab.0.center" timestamp="1608047153924">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="348" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1607971826700" />
-    <state width="1899" height="348" key="GridCell.Tab.0.left" timestamp="1607971826700">
+    <state width="1899" height="348" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1608047153924" />
+    <state width="1899" height="348" key="GridCell.Tab.0.left" timestamp="1608047153924">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="348" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1607971826700" />
-    <state width="1899" height="348" key="GridCell.Tab.0.right" timestamp="1607971826700">
+    <state width="1899" height="348" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1608047153924" />
+    <state width="1899" height="348" key="GridCell.Tab.0.right" timestamp="1608047153924">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="348" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1607971826700" />
-    <state width="1899" height="348" key="GridCell.Tab.1.bottom" timestamp="1607971826700">
+    <state width="1899" height="348" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1608047153924" />
+    <state width="1899" height="348" key="GridCell.Tab.1.bottom" timestamp="1608047153925">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="348" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1607971826700" />
-    <state width="1899" height="348" key="GridCell.Tab.1.center" timestamp="1607971826700">
+    <state width="1899" height="348" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1608047153925" />
+    <state width="1899" height="348" key="GridCell.Tab.1.center" timestamp="1608047153925">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="348" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1607971826700" />
-    <state width="1899" height="348" key="GridCell.Tab.1.left" timestamp="1607971826700">
+    <state width="1899" height="348" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1608047153925" />
+    <state width="1899" height="348" key="GridCell.Tab.1.left" timestamp="1608047153925">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="348" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1607971826700" />
-    <state width="1899" height="348" key="GridCell.Tab.1.right" timestamp="1607971826700">
+    <state width="1899" height="348" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1608047153925" />
+    <state width="1899" height="348" key="GridCell.Tab.1.right" timestamp="1608047153925">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1899" height="348" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1607971826700" />
-    <state x="461" y="165" key="SettingsEditor" timestamp="1607970051413">
+    <state width="1899" height="348" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1608047153925" />
+    <state x="461" y="165" key="SettingsEditor" timestamp="1608041269769">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="461" y="165" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1607970051413" />
+    <state x="461" y="165" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1608041269769" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/apis/recommendations/get_recommendations.py</url>
+          <line>46</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

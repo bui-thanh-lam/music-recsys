@@ -27,7 +27,7 @@ def get_history(userId):
         cursor.execute(sql, userId)
         histories = cursor.fetchall()
         for h in histories:
-            echonestTrackId = histories['echonest_track_id']
+            echonestTrackId = h['echonest_track_id']
             sql = "SELECT * FROM track WHERE echonest_track_id = %s"
             cursor.execute(sql, echonestTrackId)
             track = cursor.fetchone()
@@ -89,6 +89,18 @@ def increase_view(userId, echonestTrackId):
     return None
 
 
+def get_artist_by_id(artist_id):
+    """Get an artist given their id. Return None if the id is invalid"""
+    try:
+        sql = "SELECT * FROM artist WHERE artist_id = %s"
+        cursor.execute(sql, artist_id)
+        artist = cursor.fetchone()
+        return artist
+    except:
+        print("Failed to get artist")
+        return None
+
+
 def get_genres(artistId):
     """Return aritst's genres given their id. Return None if artist_id is invalid"""
     genres = []
@@ -96,7 +108,7 @@ def get_genres(artistId):
         sql = "SELECT genre FROM artist_genre WHERE artist_id = %s"
         cursor.execute(sql, artistId)
         for row in cursor:
-            genres.append(row)
+            genres.append(row['genre'])
         return genres
     except:
         print("Failed to get artist's genres")
@@ -180,7 +192,7 @@ def get_track_by_id(echonest_track_id):
             cursor.execute(sql, echonest_track_id)
             artist_ids = cursor.fetchall()
             for artist_id in artist_ids:
-                sql = "SELECT artist_name FROM artist WHERE artist_id = %s"
+                sql = "SELECT * FROM artist WHERE artist_id = %s"
                 cursor.execute(sql, artist_id['artist_id'])
                 artist = cursor.fetchone()
                 artists.append(artist)
@@ -189,3 +201,8 @@ def get_track_by_id(echonest_track_id):
     except:
         print("Failed to get track")
         return None
+
+
+def get_all_tracks():
+    cursor.execute("SELECT echonest_track_id FROM track")
+    return cursor.fetchall()
