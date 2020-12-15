@@ -4,6 +4,11 @@ from apis.recommendations.WMF import WeightedMF
 from apis.recommendations import utils, similarity
 from pprint import pprint
 
+dict_user = repo.get_dict_user()
+dict_item = repo.get_dict_item()
+wmf = WeightedMF()
+wmf.load()
+
 
 def get_list_rec(user_id, dict_user, dict_item, wmf):
     user_index = dict_user[user_id]
@@ -14,10 +19,6 @@ def get_list_rec(user_id, dict_user, dict_item, wmf):
 
 def get_CF_playlist(user_id, n_tracks):
     """Return a collaborative filtering based recommended playlist given a user_id. Return None if the user is new"""
-    dict_user = repo.get_dict_user()
-    dict_item = repo.get_dict_item()
-    wmf = WeightedMF()
-    wmf.load()
     if repo.is_new_user(user_id):
         return None
     track_ids = get_list_rec(user_id, dict_user, dict_item, wmf)  # list of recommended echonest_track_id for user_id
