@@ -120,6 +120,34 @@ def get_artist_by_name(key_word):
         print("Failed to get artist")
         return None
 
+def get_popular_artists_by_genre(genre, number):
+    artists = []
+    try:
+        sql = "SELECT a.artist_id FROM artist AS a, artist_genre AS ag " \
+              "WHERE a.artist_id = ag.artist_id " \
+              "AND ag.genre = %s " \
+              "ORDER BY a.artist_popularity DESC " \
+              "LIMIT %s"
+        cursor.execute(sql, (genre, number))
+        data = cursor.fetchall()
+        for row in data:
+            sql = "SELECT * FROM artist WHERE artist_id = %s"
+            cursor.execute(sql, (row['artist_id']))
+            artist = cursor.fetchone()
+            sql = "SELECT * FROM artist_genre WHERE artist_id = %s"
+            cursor.execute(sql, (row['artist_id']))
+            genres = []
+            for row_genre in cursor:
+                genres.append(row_genre['genre'])
+            artist['genres'] = genres
+            artists.append(artist)
+        return artists
+    except:
+        print("Failed to get artist")
+        return None
+
+
+
 def get_genres(artistId):
     """Return aritst's genres given their id. Return None if artist_id is invalid"""
     genres = []
