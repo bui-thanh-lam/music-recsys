@@ -100,6 +100,25 @@ def get_artist_by_id(artist_id):
         print("Failed to get artist")
         return None
 
+def get_artist_by_name(key_word):
+    """Get an artist given their name. Return None if the key word is invalid"""
+    try:
+        sql = "SELECT * FROM artist WHERE artist_name LIKE %s ORDER BY artist_popularity DESC"
+        cursor.execute(sql, ("%"+key_word+"%",))
+        artists = []
+        for row in cursor:
+            artists.append(row)
+        for artist in artists:
+            genres = []
+            sql = "SELECT * FROM artist_genre WHERE artist_id = %s"
+            cursor.execute(sql, (artist['artist_id']))
+            for row in cursor:
+                genres.append(row['genre'])
+            artist['genres'] = genres
+        return artists
+    except:
+        print("Failed to get artist")
+        return None
 
 def get_genres(artistId):
     """Return aritst's genres given their id. Return None if artist_id is invalid"""
