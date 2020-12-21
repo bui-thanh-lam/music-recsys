@@ -100,6 +100,7 @@ def get_artist_by_id(artist_id):
         print("Failed to get artist")
         return None
 
+
 def get_artist_by_name(key_word):
     """Get an artist given their name. Return None if the key word is invalid"""
     try:
@@ -119,6 +120,7 @@ def get_artist_by_name(key_word):
     except:
         print("Failed to get artist")
         return None
+
 
 def get_popular_artists_by_genre(genre, number):
     artists = []
@@ -145,7 +147,6 @@ def get_popular_artists_by_genre(genre, number):
     except:
         print("Failed to get artist")
         return None
-
 
 
 def get_genres(artistId):
